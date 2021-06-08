@@ -1,7 +1,8 @@
 import React from 'react';
-import HistoryRecord from "./HistoryRecord";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
+import PropTypes from 'prop-types';
+import HistoryRecord from "./HistoryRecord";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ function HistoryPanel({
 }
 
 HistoryPanel.protoTypes = {
+  PropTypes: PropTypes.array.isRequired,
 };
 
 export default HistoryPanel;

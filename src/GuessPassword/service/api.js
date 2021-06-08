@@ -17,8 +17,7 @@ const get = async (uri, queries = {}) => {
     method: 'GET',
     headers: {'Content-Type':'application/json'},
   })
-    .then(res => res.json())
-    .catch(e => console.log(e))
+    .then(res => res.json());
 };
 
 const post = async (uri, postData = {}) => {
@@ -27,8 +26,12 @@ const post = async (uri, postData = {}) => {
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify(postData),
   })
-      .then(res => res.json())
-      .catch(e => console.log(e))
+    .then(res => {
+      if (res.status === 404) {
+        return {status: 404};
+      }
+      return res.json();
+    });
 };
 
 export const getNewPassword = async () => {

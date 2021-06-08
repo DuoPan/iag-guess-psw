@@ -2,9 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import HighlightOff from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     borderRadius: 4,
     boxShadow: '0 0 0 1px rgb(0 0 0 / 20%)',
@@ -52,7 +54,13 @@ function InputArea({
         InputProps={{
           disableUnderline: true,
           maxLength: 8,
-          endAdornment: (value ==='' ? null : (<InputAdornment onClick={clear}><HighlightOff className={classes.icon}/></InputAdornment>)),
+          endAdornment: (value ==='' ? null : (
+            <InputAdornment>
+              <IconButton onClick={clear}>
+                <HighlightOffIcon className={classes.icon}/>
+              </IconButton>
+            </InputAdornment>
+          )),
           classes: {
             input: classes.input,
           },
@@ -64,6 +72,10 @@ function InputArea({
 }
 
 InputArea.protoTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  clear: PropTypes.func.isRequired,
+  sendAnswer: PropTypes.func.isRequired,
 };
 
 export default InputArea;

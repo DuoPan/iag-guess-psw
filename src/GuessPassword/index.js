@@ -7,6 +7,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {getNewPassword, verifyPassword} from './service/api';
 import InputArea from "./component/InputArea";
 import HistoryPanel from "./component/HistoryPanel";
+import ErrorInfo from "./component/ErrorInfo";
+import {
+  GAME_PREPARE,
+  GAME_WIN,
+  GAME_START,
+  GAME_SERVER_ERROR_GENERIC,
+  GAME_SERVER_ERROR_HINT_NOT_FOUND
+} from "./service/constant";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,11 +63,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GAME_PREPARE = 1;
-const GAME_START = 2;
-const GAME_WIN = 3;
-const GAME_SERVER_ERROR = 100;
-
 function GuessPassword() {
   const [hint, setHint] = useState('');
   const [answer, setAnswer] = useState('');
@@ -70,19 +73,27 @@ function GuessPassword() {
   useEffect(() => {
     if (gameStatus === GAME_PREPARE) {
       setHistory([])
-      getNewPassword().then(r => {setHint(r.hint); setGameStatus(GAME_START)}).catch(e => setGameStatus(GAME_SERVER_ERROR));
+      getNewPassword()
+          .then(r => {setHint(r.hint); setGameStatus(GAME_START)})
+          .catch(e => setGameStatus(GAME_SERVER_ERROR_GENERIC));
     }
   },[gameStatus]);
 
   const sendAnswer = () => {
     if (answer.length === 8) {
-      verifyPassword({answer}).then(r => {
+      verifyPassword({hint, answer}).then(r => {
+        if (r.status === 404) {
+          setGameStatus(GAME_SERVER_ERROR_HINT_NOT_FOUND);
+          return;
+        }
         setAnswer('');
         setHistory(Object.assign([], history, {[history.length]: r}))
         if (r.correct) {
           setGameStatus(GAME_WIN)
         }
-      }).catch(e => setGameStatus(GAME_SERVER_ERROR));
+      }).catch(e => {
+        setGameStatus(GAME_SERVER_ERROR_GENERIC);
+      });
     }
   };
 
@@ -103,12 +114,8 @@ function GuessPassword() {
         <CircularProgress />
       </div>
     );
-  } else if (gameStatus === GAME_SERVER_ERROR) {
-    return (
-      <div className={classes.loading}>
-        <Typography>Server error, please try again later.</Typography>
-      </div>
-    );
+  } else if (gameStatus >= GAME_SERVER_ERROR_GENERIC) {
+    return (<ErrorInfo code={gameStatus} />);
   }
 
   return (
@@ -124,7 +131,7 @@ function GuessPassword() {
           <InputArea
             value={answer}
             onChange={(v) => handleEnterPassword(v.target.value)}
-            clear={() => sendAnswer('')}
+            clear={() => setAnswer('')}
             sendAnswer={sendAnswer}
           />
           <Button

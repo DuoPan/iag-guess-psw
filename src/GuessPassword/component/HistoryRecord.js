@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import DoneIcon from '@material-ui/icons/Done';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'green',
     borderRadius: 4,
     padding: 4,
+  },
+  icon: {
+    marginLeft: 8,
   },
 }));
 
@@ -50,7 +55,10 @@ function HistoryRecord({
   return (
     <div className={classes.root}>
       {data.correct ? (
-        <Typography variant={'h5'} className={classes.suc}>{data.answer}</Typography>
+        <>
+          <Typography variant={'h5'} className={classes.suc}>{data.answer}</Typography>
+          <DoneIcon className={classes.icon}/>
+        </>
       ) : (
         data.answer.split('').map((v) => {
           return renderDigital(v);
@@ -61,6 +69,7 @@ function HistoryRecord({
 }
 
 HistoryRecord.protoTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 export default HistoryRecord;
