@@ -21,6 +21,8 @@ Remember to run the [backend server](https://github.com/DuoPan/iag-backend).
 * Input value validation: only allow digital numbers, no duplicate number and max length is 8.
 * Input component contains a 'clear all' button.
 * Input component support 'Enter' key. 
+* The submit button will be disabled until input value length equals to 8.
 * Responsive and support mobile view.
+* Attempt history div is scrollable.
 * Allow running multiple games simultaneously.
 * Styles and icons are based on Material UI.
