@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### How to run
 1. `npm install`
 2. `npm start`
+3. Optional `npm test`
 
 Remember to run the [backend server](https://github.com/DuoPan/iag-backend).
 
