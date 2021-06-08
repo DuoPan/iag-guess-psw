@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import DoneIcon from '@material-ui/icons/Done';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     paddingTop: 8,
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// display one history record
 function HistoryRecord({
   data,
 }) {
@@ -40,6 +41,7 @@ function HistoryRecord({
     return (data.highlight.indexOf(value) !== -1);
   };
 
+  // single digital
   const renderDigital = (value) => {
     return (
       <Typography

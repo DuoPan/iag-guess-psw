@@ -16,7 +16,7 @@ import {
   GAME_SERVER_ERROR_HINT_NOT_FOUND
 } from "./service/constant";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -70,6 +70,7 @@ function GuessPassword() {
   const [gameStatus, setGameStatus] = useState(GAME_PREPARE);
   const classes = useStyles();
 
+  // start the game immediately or clicked restart button
   useEffect(() => {
     if (gameStatus === GAME_PREPARE) {
       setHistory([])
@@ -79,6 +80,8 @@ function GuessPassword() {
     }
   },[gameStatus]);
 
+  // post the answer to the backend
+  // and handle the return value.
   const sendAnswer = () => {
     if (answer.length === 8) {
       verifyPassword({hint, answer}).then(r => {
@@ -97,6 +100,10 @@ function GuessPassword() {
     }
   };
 
+  // set restrictions on the input value
+  // 1. no duplicate number
+  // 2. no non-number character
+  // 3. no more than 8 digital
   const handleEnterPassword = (value) => {
     const text = value.split('')
     let dup = text.some( (v, i, a) => {

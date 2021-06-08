@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 import HistoryRecord from "./HistoryRecord";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     "@media (min-width: 420px)": {
       display: 'flex',
