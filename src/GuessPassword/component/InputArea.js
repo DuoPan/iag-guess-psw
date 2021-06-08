@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
     width: window.innerWidth / 4,
     minWidth: 200,
     marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   icon: {
     color: '#c7c5c5',

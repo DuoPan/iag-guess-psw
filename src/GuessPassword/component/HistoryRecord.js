@@ -37,7 +37,13 @@ function HistoryRecord({
 
   const renderDigital = (value) => {
     return (
-      <Typography className={isHighlight(value) ? classes.highlight : classes.normal} variant={'h5'}>{value}</Typography>
+      <Typography
+        className={isHighlight(value) ? classes.highlight : classes.normal}
+        variant={'h5'}
+        key={value}
+      >
+        {value}
+      </Typography>
     );
   };
 
